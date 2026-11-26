@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malla Reddy University - Student Dashboard</title>
+    <!-- Bootstrap 5 CSS CDN -->
+    <link href="https://jsdelivr.net" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://jsdelivr.net" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f6f9;
+        }
+        .navbar-brand {
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        .card {
+            border: none;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+        }
+        .carousel-item {
+            height: 180px;
+            background: linear-gradient(135deg, #0d6efd, #003366);
+            color: white;
+            border-radius: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. NAVBAR COMPONENT -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-mortarboard-fill me-2"></i>Malla Reddy University
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link active" href="#">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#timetable">Timetable</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#exams">Exams</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#services">Student Services</a></li>
+                </ul>
+                <div class="d-flex align-items-center text-white">
+                    <span class="me-3 small">Welcome, <strong>Rahul Sharma (2211CS0101)</strong></span>
+                    <button class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#profileModal">
+                        <i class="bi bi-person-circle"></i> Profile
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTAINER (GRID SYSTEM) -->
+    <div class="container my-4">
+
+        <!-- 2. ALERTS COMPONENT (Fee Reminders & Urgent Notices) -->
+        <div class="alert alert-warning alert-dismissible fade show d-flex align-items-center shadow-sm" role="alert">
+            <i class="bi bi-exclamation-triangle-fill fs-4 me-3"></i>
+            <div>
+                <strong>Fee Reminder:</strong> Semester tuition fee payment deadline is <strong>December 10, 2026</strong>. 
+                <button class="btn btn-sm btn-warning ms-2 fw-bold" data-bs-toggle="modal" data-bs-target="#feeModal">Pay Now</button>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+        <!-- 3. CAROUSEL COMPONENT (Academic Notifications & Events) -->
+        <div id="campusCarousel" class="carousel slide mb-4 shadow-sm" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active p-4">
+                    <div class="d-flex flex-column justify-content-center h-100 px-4">
+                        <span class="badge bg-warning text-dark w-auto align-self-start mb-2">Academic Notice</span>
+                        <h4>Mid-Term Examination Schedule Released</h4>
+                        <p class="mb-0">B.Tech III Year Semester-I examinations will commence from next Monday. Check the exam section below.</p>
+                    </div>
+                </div>
+                <div class="carousel-item p-4" style="background: linear-gradient(135deg, #198754, #0f5132);">
+                    <div class="d-flex flex-column justify-content-center h-100 px-4">
+                        <span class="badge bg-light text-dark w-auto align-self-start mb-2">Campus Event</span>
+                        <h4>Annual Tech Fest "MRU INNOVATE 2026"</h4>
+                        <p class="mb-0">Registrations are now open for Hackathon, Coding Contests, and Robotics workshops.</p>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#campusCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#campusCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </button>
+        </div>
+
+        <!-- 4. CARDS & GRID SYSTEM (Attendance & Quick Metrics) -->
+        <div class="row g-3 mb-4">
+            <div class="col-md-3 col-sm-6">
+                <div class="card p-3 border-start border-primary border-4">
+                    <div class="text-muted small">Overall Attendance</div>
+                    <div class="fs-3 fw-bold text-primary">84.5%</div>
+                    <div class="progress mt-2" style="height: 6px;">
+                        <div class="progress-bar bg-primary" style="width: 84.5%"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card p-3 border-start border-success border-4">
+                    <div class="text-muted small">Current CGPA</div>
+                    <div class="fs-3 fw-bold text-success">8.92</div>
+                    <div class="small text-muted mt-1">Up to Sem IV</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card p-3 border-start border-danger border-4">
+                    <div class="text-muted small">Pending Dues</div>
+                    <div class="fs-3 fw-bold text-danger">₹15,000</div>
+                    <div class="small text-muted mt-1">Due: 10 Dec 2026</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card p-3 border-start border-info border-4">
+                    <div class="text-muted small">Library Books Issued</div>
+                    <div class="fs-3 fw-bold text-info">2 Books</div>
+                    <div class="small text-muted mt-1">Return by: 02 Dec</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. TABLES & BUTTONS (Timetable & Exam Schedule) -->
+        <div class="row g-4 mb-4">
+            <!-- Today's Timetable -->
+            <div class="col-lg-7" id="timetable">
+                <div class="card h-100">
+                    <div class="card-header bg-white fw-bold d-flex justify-content-between align-items-center">
+                        <span><i class="bi bi-calendar-week me-2 text-primary"></i>Today's Class Timetable</span>
+                        <span class="badge bg-primary">Thursday</span>
+                    </div>
+                    <div class="card-body table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Time</th>
+                                    <th>Subject</th>
+                                    <th>Room</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>09:30 - 10:30</td>
+                                    <td>Web Technologies</td>
+                                    <td>Block A - 302</td>
+                                    <td><span class="badge bg-success">Completed</span></td>
+                                </tr>
+                                <tr>
+                                    <td>10:30 - 11:30</td>
+                                    <td>Machine Learning</td>
+                                    <td>Block A - 302</td>
+                                    <td><span class="badge bg-primary">Ongoing</span></td>
+                                </tr>
+                                <tr>
+                                    <td>11:45 - 12:45</td>
+                                    <td>Cloud Computing</td>
+                                    <td>Lab - 4</td>
+                                    <td><span class="badge bg-secondary">Upcoming</span></td>
+                                </tr>
+                                <tr>
+                                    <td>01:45 - 03:45</td>
+                                    <td>Full Stack Lab</td>
+                                    <td>CS Lab - 2</td>
+                                    <td><span class="badge bg-secondary">Upcoming</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Examination Schedule & Student Services -->
+            <div class="col-lg-5" id="exams">
+                <div class="card mb-4">
+                    <div class="card-header bg-white fw-bold">
+                        <i class="bi bi-file-earmark-text me-2 text-danger"></i>Examination Schedule
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
