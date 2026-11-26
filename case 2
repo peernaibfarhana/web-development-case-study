@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Malla Reddy University | Student Services</title>
+  <link rel="preconnect" href="https://googleapis.com">
+  <link rel="preconnect" href="https://gstatic.com" crossorigin>
+  <link href="https://googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Header & Navigation -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <div class="logo">
+        <span class="logo-badge">MRU</span>
+        <span class="logo-text">Malla Reddy University</span>
+      </div>
+      <nav class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#services">Services</a>
+        <a href="#announcements">Notices</a>
+        <a href="#contact">Support</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="home" class="hero">
+    <div class="container hero-content">
+      <h1>Student Services Portal</h1>
+      <p>Quick and seamless access to campus facilities, academic resources, and essential student support services at Malla Reddy University.</p>
+      <a href="#services" class="btn-primary">Explore Services</a>
+    </div>
+  </section>
+
+  <!-- Student Services Grid -->
+  <main id="services" class="container services-section">
+    <div class="section-header">
+      <h2>Campus Services</h2>
+      <p>Select a service below to access portals, schedules, and support desks.</p>
+    </div>
+
+    <div class="services-grid">
+      <!-- Library -->
+      <article class="service-card">
+        <div class="icon-box">📚</div>
+        <h3>Central Library</h3>
+        <p>Search the digital catalog, access e-journals, check book availability, and view reading room hours.</p>
+        <a href="#library" class="card-link">Access Library &rarr;</a>
+      </article>
+
+      <!-- Transport -->
+      <article class="service-card">
+        <div class="icon-box">🚌</div>
+        <h3>Campus Transport</h3>
+        <p>View university bus routes across Hyderabad, live timings, fee details, and bus pass registration.</p>
+        <a href="#transport" class="card-link">View Bus Routes &rarr;</a>
+      </article>
+
+      <!-- Hostel -->
+      <article class="service-card">
+        <div class="icon-box">🏢</div>
+        <h3>Hostel &amp; Dining</h3>
+        <p>Check boys and girls hostel accommodation details, mess menus, rules, and maintenance requests.</p>
+        <a href="#hostel" class="card-link">Hostel Portal &rarr;</a>
+      </article>
+
+      <!-- Placements -->
+      <article class="service-card">
+        <div class="icon-box">💼</div>
+        <h3>Training &amp; Placements</h3>
+        <p>Stay updated on upcoming recruitment drives, internship opportunities, and skill-building workshops.</p>
+        <a href="#placements" class="card-link">Placement Cell &rarr;</a>
+      </article>
+
+      <!-- Examination -->
+      <article class="service-card">
+        <div class="icon-box">📝</div>
+        <h3>Examination Branch</h3>
+        <p>Download semester exam timetables, hall tickets, revaluation forms, and check semester results.</p>
+        <a href="#exams" class="card-link">Exam Updates &rarr;</a>
+      </article>
+    </div>
+  </main>
+
+  <!-- Quick Notices Strip -->
+  <section id="announcements" class="notices-section">
+    <div class="container">
+      <h2>Latest Student Notices</h2>
+      <div class="notice-list">
+        <div class="notice-item">
+          <span class="tag">Exams</span>
+          <p>End-Semester Examination Time Table for B.Tech &amp; Degree courses is now live.</p>
+        </div>
+        <div class="notice-item">
+          <span class="tag">Placements</span>
+          <p>Pre-placement training registration closes this Friday at 5:00 PM.</p>
+        </div>
+        <div class="notice-item">
+          <span class="tag">Transport</span>
+          <p>Updated morning shuttle timings for Secunderabad and Kukatpally routes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="contact" class="footer">
+    <div class="container footer-content">
+      <div>
+        <h3>Malla Reddy University</h3>
+        <p>Maisammaguda, Dulapally, Hyderabad, Telangana 500100</p>
+      </div>
+      <div class="footer-contact">
+        <p>Student Helpdesk: support@mallareddyuniversity.ac.in</p>
+        <p>&copy; 2026 Malla Reddy University. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
