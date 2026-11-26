@@ -1,0 +1,80 @@
+// Sample student records
+const students = [
+  {
+    id: "MR2301",
+    name: "Aarav Sharma",
+    attendance: 82,      // percentage
+    academicScore: 74, // percentage / internal performance
+    examType: "Endterm" // "Minor-1", "Minor-2", or "Endterm"
+  },
+  {
+    id: "MR2302",
+    name: "Ananya Reddy",
+    attendance: 68,
+    academicScore: 80,
+    examType: "Minor-1"
+  },
+  {
+    id: "MR2303",
+    name: "Rohan Verma",
+    attendance: 76,
+    academicScore: 45,
+    examType: "Minor-2"
+  }
+];
+
+function checkExamEligibility(studentList) {
+  const results = [];
+
+  // Loop through each student record
+  for (let i = 0; i < studentList.length; i++) {
+    const student = studentList[i];
+    const exam = student.examType;
+    let minAttendance = 75;
+    let minPerformance = 40;
+
+    // Adjust thresholds based on exam type using conditional statements
+    if (exam === "Minor-1" || exam === "Minor-2") {
+      minAttendance = 70;
+      minPerformance = 35;
+    } else if (exam === "Endterm") {
+      minAttendance = 75;
+      minPerformance = 50;
+    }
+
+    // Evaluate eligibility using comparison and logical operators
+    const meetsAttendance = student.attendance >= minAttendance;
+    const meetsPerformance = student.academicScore >= minPerformance;
+    const isEligible = meetsAttendance && meetsPerformance;
+
+    // Build clear status message
+    let statusMessage = "";
+    if (isEligible) {
+      statusMessage = `ELIGIBLE for ${exam}`;
+    } else {
+      const reasons = [];
+      if (!meetsAttendance) {
+        reasons.push(`low attendance (${student.attendance}% < ${minAttendance}%)`);
+      }
+      if (!meetsPerformance) {
+        reasons.push(`low academic performance (${student.academicScore}% < ${minPerformance}%)`);
+      }
+      statusMessage = `NOT ELIGIBLE for ${exam} (${reasons.join(" and ")})`;
+    }
+
+    results.push({
+      id: student.id,
+      name: student.name,
+      examType: exam,
+      status: statusMessage
+    });
+  }
+
+  return results;
+}
+
+// Display results
+const eligibilityReport = checkExamEligibility(students);
+for (const record of eligibilityReport) {
+  console.log(`${record.id} | ${record.name} -> ${record.status}`);
+}
