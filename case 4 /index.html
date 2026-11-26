@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MRU - Online Student Service Portal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+        header {
+            background-color: #003366;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px 8px 0 0;
+            text-align: center;
+        }
+        .container {
+            background: white;
+            padding: 25px;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #0055a5;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #003366;
+        }
+        .hidden {
+            display: none;
+        }
+        .error {
+            color: #d9534f;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .success-msg {
+            background-color: #dff0d8;
+            color: #3c763d;
+            padding: 12px;
+            border-radius: 4px;
+            margin-top: 15px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 25px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #003366;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h2>MALLA REDDY UNIVERSITY (MRU)</h2>
+    <p>Online Student Service Portal</p>
+</header>
+
+<div class="container">
+    <form id="serviceForm">
+        <div class="form-group">
+            <label for="studentName">Student Name *</label>
+            <input type="text" id="studentName" placeholder="Enter your full name">
+            <div id="nameError" class="error"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="rollNo">Roll Number *</label>
+            <input type="text" id="rollNo" placeholder="e.g., 2211CS010001">
+            <div id="rollError" class="error"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="serviceType">Select Service *</label>
+            <select id="serviceType">
+                <option value="">-- Choose a Service --</option>
+                <option value="Leave Request">Leave Request</option>
+                <option value="Bonafide Certificate">Bonafide Certificate</option>
+                <option value="Course Registration">Elective Course Registration</option>
+            </select>
+            <div id="serviceError" class="error"></div>
+        </div>
+
+        <!-- Dynamic Section 1: Leave Request -->
+        <div id="leaveFields" class="form-group hidden">
+            <label for="leaveReason">Reason & Dates for Leave *</label>
+            <textarea id="leaveReason" rows="3" placeholder="Specify dates and reason for leave"></textarea>
+        </div>
+
+        <!-- Dynamic Section 2: Bonafide Certificate -->
+        <div id="bonafideFields" class="form-group hidden">
+            <label for="bonafidePurpose">Purpose of Bonafide *</label>
+            <input type="text" id="bonafidePurpose" placeholder="e.g., Passport, Bank Loan, Bus Pass">
+        </div>
+
+        <!-- Dynamic Section 3: Elective Course Registration -->
+        <div id="courseFields" class="form-group hidden">
+            <label for="electiveCourse">Select Elective Course *</label>
+            <select id="electiveCourse">
+                <option value="Cloud Computing">Cloud Computing</option>
+                <option value="Artificial Intelligence & ML">Artificial Intelligence & ML</option>
+                <option value="Cyber Security">Cyber Security</option>
+                <option value="Full Stack Web Development">Full Stack Web Development</option>
+            </select>
+        </div>
+
+        <div id="dynamicError" class="error"></div>
+
+        <button type="submit">Submit Request</button>
+    </form>
+
+    <!-- Immediate Feedback Box -->
+    <div id="feedback" class="success-msg hidden"></div>
+
+    <!-- Submitted Requests History -->
+    <h3>Submitted Applications</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Roll No</th>
+                <th>Name</th>
+                <th>Service Type</th>
+                <th>Details</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody id="recordsTableBody">
+            <!-- Records will be dynamically inserted here -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+    // Array to store submitted student requests
+    const studentRequests = [];
+
+    // DOM Elements
+    const serviceForm = document.getElementById('serviceForm');
+    const serviceType = document.getElementById('serviceType');
+    const leaveFields = document.getElementById('leaveFields');
+    const bonafideFields = document.getElementById('bonafideFields');
+    const courseFields = document.getElementById('courseFields');
+    const feedbackBox = document.getElementById('feedback');
+    const recordsTableBody = document.getElementById('recordsTableBody');
+
+    // Event Handling: Show/Hide fields dynamically based on selected service
+    serviceType.addEventListener('change', function() {
+        leaveFields.classList.add('hidden');
+        bonafideFields.classList.add('hidden');
+        courseFields.classList.add('hidden');
+        document.getElementById('dynamicError').textContent = '';
+
+        if (this.value === 'Leave Request') {
+            leaveFields.classList.remove('hidden');
+        } else if (this.value === 'Bonafide Certificate') {
+            bonafideFields.classList.remove('hidden');
+        } else if (this.value === 'Course Registration') {
+            courseFields.classList.remove('hidden');
+        }
+    });
+
+    // Form Validation Function
+    function validateForm(name, roll, service, details) {
+        let isValid = true;
+        
+        // Reset error messages
+        document.getElementById('nameError').textContent = '';
+        document.getElementById('rollError').textContent = '';
+        document.getElementById('serviceError').textContent = '';
+        document.getElementById('dynamicError').textContent = '';
+
+        if (name === '') {
+            document.getElementById('nameError').textContent = 'Student name is required.';
+            isValid = false;
+        }
+        if (roll === '') {
+            document.getElementById('rollError').textContent = 'Roll number is required.';
+            isValid = false;
+        }
+        if (service === '') {
+            document.getElementById('serviceError').textContent = 'Please select a service.';
+            isValid = false;
+        } else if (details === '') {
+            document.getElementById('dynamicError').textContent = 'Please fill in the required details for the selected service.';
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
+    // Function to render the array of requests to the DOM
+    function updateTable() {
+        recordsTableBody.innerHTML = '';
+        studentRequests.forEach(req => {
+            const row = `<tr>
+                <td>${req.roll}</td>
+                <td>${req.name}</td>
+                <td>${req.service}</td>
+                <td>${req.details}</td>
+                <td><strong>${req.status}</strong></td>
+            </tr>`;
+            recordsTableBody.innerHTML += row;
+        });
+    }
+
+    // Event Handling: Form Submission
+    serviceForm.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent page reload
+
+        const name = document.getElementById('studentName').value.trim();
+        const roll = document.getElementById('rollNo').value.trim();
+        const service = serviceType.value;
+        let details = '';
+
+        if (service === 'Leave Request') {
+            details = document.getElementById('leaveReason').value.trim();
+        } else if (service === 'Bonafide Certificate') {
+            details = document.getElementById('bonafidePurpose').value.trim();
+        } else if (service === 'Course Registration') {
+            details = document.getElementById('electiveCourse').value;
+        }
+
+        // Validate inputs
+        if (!validateForm(name, roll, service, details)) {
+            feedbackBox.classList.add('hidden');
+            return;
+        }
+
+        // Store object in array
+        const newRequest = {
+            name: name,
+            roll: roll,
+            service: service,
+            details: details,
+            status: 'Submitted'
+        };
+        studentRequests.push(newRequest);
+
+        // Provide immediate feedback
+        feedbackBox.textContent = `Success! ${service} for ${name} (${roll}) has been submitted.`;
+        feedbackBox.classList.remove('hidden');
+
+        // Update DOM table and reset form
+        updateTable();
+        serviceForm.reset();
+        leaveFields.classList.add('hidden');
+        bonafideFields.classList.add('hidden');
+        courseFields.classList.add('hidden');
+    });
+</script>
+
+</body>
+</html>
